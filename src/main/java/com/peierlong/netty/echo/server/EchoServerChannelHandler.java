@@ -14,7 +14,7 @@ import io.netty.util.CharsetUtil;
  * @date 2019-03-07
  */
 @Sharable
-public class EchoServerHandler extends ChannelHandlerAdapter {
+public class EchoServerChannelHandler extends ChannelHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, java.lang.Object msg) {

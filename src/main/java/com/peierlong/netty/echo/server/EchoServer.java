@@ -36,7 +36,7 @@ public class EchoServer {
                     .localAddress(new InetSocketAddress(port))
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         protected void initChannel(SocketChannel ch) {
-                            ch.pipeline().addLast(new EchoServerHandler());
+                            ch.pipeline().addLast(new EchoServerChannelHandler());
                         }
                     });
             ChannelFuture f = b.bind().sync();
