@@ -16,16 +16,16 @@ import io.netty.util.CharsetUtil;
 public class EchoClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
     @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+    public void channelActive(ChannelHandlerContext ctx) {
         ctx.writeAndFlush(Unpooled.copiedBuffer("Fuck U server!", CharsetUtil.UTF_8));
     }
 
-    protected void messageReceived(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) {
         System.out.println("Server received: " + msg.toString(CharsetUtil.UTF_8));
     }
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         cause.printStackTrace();
         ctx.close();
     }

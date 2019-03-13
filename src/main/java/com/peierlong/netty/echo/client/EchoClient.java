@@ -32,7 +32,7 @@ public class EchoClient {
                     .channel(NioSocketChannel.class)
                     .remoteAddress(new InetSocketAddress(host, port))
                     .handler(new ChannelInitializer<SocketChannel>() {
-                        protected void initChannel(SocketChannel ch) throws Exception {
+                        protected void initChannel(SocketChannel ch) {
                             ch.pipeline().addLast(new EchoClientHandler());
                         }
                     });
