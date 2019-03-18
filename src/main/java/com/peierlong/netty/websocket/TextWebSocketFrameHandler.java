@@ -24,7 +24,6 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
         System.out.println(evt);
         if (evt == WebSocketServerProtocolHandler.ServerHandshakeStateEvent.HANDSHAKE_COMPLETE) {
-            System.out.println("process remove() xxx");
             ctx.pipeline().remove(HttpRequestHandler.class);
             group.writeAndFlush(new TextWebSocketFrame("client " + ctx.name() + " joined"));
             group.add(ctx.channel());
@@ -33,7 +32,7 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
         }
     }
 
-    protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) {
         group.writeAndFlush(msg.retain());
     }
 

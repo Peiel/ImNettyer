@@ -37,9 +37,6 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
 
     protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
         // 过去请求是升级了的 WebSocket 请求，则递增引用计数器并且将它传递给在 ChatServerInitializer 中的 ChanelInBoundHandler
-        System.out.println(wsUri);
-        System.out.println(request.uri());
-        System.out.println("-------");
         if (wsUri.equalsIgnoreCase(request.uri())) {
             ctx.fireChannelRead(request.retain());
         } else {

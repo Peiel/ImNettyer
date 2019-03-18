@@ -7,7 +7,7 @@
         var ws;
         var username = getUrlParameter('username');
         alert(username);
-        var url = "ws://192.168.2.196:9999/ws";
+        var url = "ws://192.168.0.106:9999/ws";
         window.onload = connect;
 
         function connect() {
@@ -22,27 +22,23 @@
 
             ws.onmessage = function (event) {
                 console.log(event);
-                eval("var result=" + event.data);
-                //欢迎语言
-                if (result.alert != undefined) {
-                    document.getElementById("content").innerHTML += result.alert
-                        + "<br/>";
-                }
-                //列表
-                if (result.names != undefined) {
-                    document.getElementById("userList").innerHTML = "";
-                    var arr = result.names;
-                    for (var i = 0; i < arr.length; i++) {
-                        document.getElementById("userList").innerHTML += arr[i]
-                            + "<br/>";
-                    }
-                }
+                var result = event
+                // //欢迎语言
+                // if (result.alert != undefined) {
+                //     document.getElementById("content").innerHTML += result.alert
+                //         + "<br/>";
+                // }
+                // //列表
+                // if (result.names != undefined) {
+                //     document.getElementById("userList").innerHTML = "";
+                //     var arr = result.names;
+                //     for (var i = 0; i < arr.length; i++) {
+                //         document.getElementById("userList").innerHTML += arr[i]
+                //             + "<br/>";
+                //     }
+                // }
                 //聊天内容
-                if (result.from != undefined) {
-                    document.getElementById("content").innerHTML += result.from
-                        + " " + result.date + " 说：<br/>" + result.sendMsg
-                        + "<br/>";
-                }
+                document.getElementById("content").innerHTML += event.data + "<br/>";
             };
         }
 
@@ -71,8 +67,8 @@
 <body>
 <div id="content"
      style="border: 1px solid black; width: 400px; height: 300px; float: left;"></div>
-<div id="userList"
-     style="border: 1px solid black; width: 100px; height: 300px; float: left;"></div>
+<!--<div id="userList"-->
+     <!--style="border: 1px solid black; width: 100px; height: 300px; float: left;"></div>-->
 
 <div style="clear: both;">
     <input id="msg"/>
