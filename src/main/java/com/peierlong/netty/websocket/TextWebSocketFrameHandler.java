@@ -25,7 +25,7 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
         System.out.println(evt);
         if (evt == WebSocketServerProtocolHandler.ServerHandshakeStateEvent.HANDSHAKE_COMPLETE) {
             ctx.pipeline().remove(HttpRequestHandler.class);
-            group.writeAndFlush(new TextWebSocketFrame("client " + ctx.name() + " joined"));
+            group.writeAndFlush(new TextWebSocketFrame("client " + ctx.channel() + " joined"));
             group.add(ctx.channel());
         } else {
             super.userEventTriggered(ctx, evt);
