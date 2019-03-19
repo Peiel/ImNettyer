@@ -22,8 +22,7 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
 
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
-        System.out.println(evt);
-        if (evt == WebSocketServerProtocolHandler.ServerHandshakeStateEvent.HANDSHAKE_COMPLETE) {
+        if (evt instanceof WebSocketServerProtocolHandler.HandshakeComplete) {
             ctx.pipeline().remove(HttpRequestHandler.class);
             group.writeAndFlush(new TextWebSocketFrame("client " + ctx.channel() + " joined"));
             group.add(ctx.channel());

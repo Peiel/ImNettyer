@@ -57,7 +57,6 @@ public class ChatServer {
 
         final ChatServer endpoint = new ChatServer();
         ChannelFuture future = endpoint.start(new InetSocketAddress(port));
-        System.out.println("process start func");
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
