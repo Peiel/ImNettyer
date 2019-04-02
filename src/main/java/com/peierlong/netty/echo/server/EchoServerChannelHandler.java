@@ -1,12 +1,9 @@
 package com.peierlong.netty.echo.server;
 
-import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.util.CharsetUtil;
 
 /**
  * @author Peiel
@@ -16,16 +13,15 @@ import io.netty.util.CharsetUtil;
 @Sharable
 public class EchoServerChannelHandler extends ChannelInboundHandlerAdapter {
 
-    @Override
-    public void channelRead(ChannelHandlerContext ctx, java.lang.Object msg) {
-        ByteBuf in = (ByteBuf) msg;
-        System.out.println("Server received: " + in.toString(CharsetUtil.UTF_8));
-        ctx.write(in);
-    }
+    private int counter;
 
     @Override
-    public void channelReadComplete(ChannelHandlerContext ctx) {
-        ctx.writeAndFlush(Unpooled.EMPTY_BUFFER).addListener(ChannelFutureListener.CLOSE);
+    public void channelRead(ChannelHandlerContext ctx, Object msg) {
+        String body = (String) msg;
+        System.out.println("Server received: " + body + ", counter is " + ++counter);
+
+        body += "$_";
+        ctx.writeAndFlush(Unpooled.copiedBuffer(body.getBytes()));
     }
 
     @Override

@@ -1,11 +1,9 @@
 package com.peierlong.netty.echo.client;
 
-import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.util.CharsetUtil;
 
 /**
  * @author Peiel
@@ -13,15 +11,25 @@ import io.netty.util.CharsetUtil;
  * @date 2019-03-07
  */
 @ChannelHandler.Sharable
-public class EchoClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
+public class EchoClientHandler extends SimpleChannelInboundHandler<Object> {
+
+    private int counter;
+    static final String ECHO_REQ = "Hi, Peiel, Welcome to Netty.$_";
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
-        ctx.writeAndFlush(Unpooled.copiedBuffer("Fuck U server!", CharsetUtil.UTF_8));
+        for (int i = 0; i < 10; i++) {
+            ctx.writeAndFlush(Unpooled.copiedBuffer(ECHO_REQ.getBytes()));
+        }
     }
 
-    protected void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) {
-        System.out.println("Server received: " + msg.toString(CharsetUtil.UTF_8));
+    protected void channelRead0(ChannelHandlerContext ctx, Object msg) {
+        System.out.println("This is " + ++counter + " times receive server : [" + msg + "]");
+    }
+
+    @Override
+    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+        ctx.flush();
     }
 
     @Override
