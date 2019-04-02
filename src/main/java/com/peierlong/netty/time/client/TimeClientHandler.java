@@ -11,7 +11,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
  * 时间: 2017/1/8 下午8:16
  * 描述 :
  */
-public class TimeClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
+public class TimeClientHandler extends SimpleChannelInboundHandler<Object> {
     private int counter;
     private byte[] req;
 
@@ -30,15 +30,9 @@ public class TimeClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
     }
 
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println("channelRead() msg: " + msg);
-        super.channelRead(ctx, msg);
-    }
-
-    @Override
-    protected void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
-        System.out.println("channelRead0() msg : " + msg);
-
+    protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
+        String body = (String) msg;
+        System.out.println("当前时间是： " + body + "， counter : " + ++counter);
     }
 
     @Override

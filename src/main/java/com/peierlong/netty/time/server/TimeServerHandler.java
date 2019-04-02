@@ -32,7 +32,7 @@ public class TimeServerHandler extends ChannelInboundHandlerAdapter {
         System.out.println("收到客户端的请求， 请求内容: " + body + " counter : " + ++counter);
 
         String currentTime = "当前时间是多少呢".equals(body) ? new Date().toString() : "what ars you say?";
-
+        currentTime = currentTime + System.getProperty("line.separator");
         ByteBuf responseBuf = Unpooled.copiedBuffer(currentTime.getBytes());
         ctx.writeAndFlush(responseBuf);
     }
