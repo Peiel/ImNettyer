@@ -33,12 +33,7 @@ public class TimeServerHandler extends ChannelInboundHandlerAdapter {
         String currentTime = "当前时间是多少呢".equals(body) ? new Date().toString() : "what ars you say?";
 
         ByteBuf responseBuf = Unpooled.copiedBuffer(currentTime.getBytes());
-        ctx.write(responseBuf);
-    }
-
-    @Override
-    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-        ctx.flush();
+        ctx.writeAndFlush(responseBuf);
     }
 
     @Override
