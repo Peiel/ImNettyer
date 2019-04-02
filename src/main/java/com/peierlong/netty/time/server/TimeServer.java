@@ -29,10 +29,8 @@ public class TimeServer {
                     .option(ChannelOption.SO_BACKLOG, 1024)
                     .childHandler(new ChildChannelHandler());
             //绑定端口，同步等待成功
-            System.out.println("绑定端口，同步等待成功");
             ChannelFuture future = serverBootstrap.bind(port).sync();
             //等待服务器监听端口关闭
-            System.out.println("等待服务器监听端口关闭");
             future.channel().closeFuture().sync();
         } finally {
             bossGroup.shutdownGracefully();
