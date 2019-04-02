@@ -19,15 +19,16 @@ public class TimeServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        ByteBuf byteBuf = (ByteBuf) msg;
-        byte[] req = new byte[byteBuf.readableBytes()];
-        byteBuf.readBytes(req);
-        String body = null;
-        try {
-            body = new String(req, "UTF-8").substring(0, new String(req, "UTF-8").length() - System.getProperty("line.separator").length());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        ByteBuf byteBuf = (ByteBuf) msg;
+//        byte[] req = new byte[byteBuf.readableBytes()];
+//        byteBuf.readBytes(req);
+//        String body = null;
+//        try {
+//            body = new String(req, "UTF-8").substring(0, new String(req, "UTF-8").length() - System.getProperty("line.separator").length());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        String body = (String) msg;
         System.out.println("收到客户端的请求， 请求内容: " + body + " counter : " + ++counter);
 
         String currentTime = "当前时间是多少呢".equals(body) ? new Date().toString() : "what ars you say?";
